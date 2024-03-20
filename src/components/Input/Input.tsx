@@ -17,32 +17,37 @@ export const Input: Component<InputProps> = (props: InputProps) => {
         },
         props,
     );
-    const [local, others] = splitProps(
-        props,
-        ['variant', 'color', 'darkMode', 'disabled', 'label', 'placeholder'],
-    );
+    const [local, others] = splitProps(props, [
+        'variant',
+        'color',
+        'darkMode',
+        'disabled',
+        'label',
+        'placeholder',
+    ]);
     const mainClass = () => styles[`input-${local.variant}-${local.color}`];
     const labelTextFallback = () => {
         if (local.placeholder == '') {
-            return ''
+            return '';
         } else {
-            return local.label
+            return local.label;
         }
-    }
+    };
     const placeholderTextFallback = () => {
         if (local.placeholder == '') {
-            return local.label
+            return local.label;
         } else {
-            return local.placeholder
+            return local.placeholder;
         }
-    }
+    };
 
     return (
         <label
             classList={{
                 [mainClass()]: true,
                 [styles['dark-mode']]: local.darkMode,
-                [styles['fix-margin-top']]: local.label === '' || local.placeholder === '',
+                [styles['fix-margin-top']]:
+                    local.label === '' || local.placeholder === '',
             }}
         >
             {labelTextFallback()}
@@ -52,5 +57,5 @@ export const Input: Component<InputProps> = (props: InputProps) => {
                 {...others}
             />
         </label>
-    )
-}
+    );
+};
