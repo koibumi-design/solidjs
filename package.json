@@ -1,6 +1,7 @@
 {
   "name": "@koibumi-design/solidjs",
   "version": "0.0.0",
+  "private": false,
   "keywords": [
     "koibumi-design",
     "solidjs"
