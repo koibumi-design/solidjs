@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
-import { Button } from '../components/Button';
+import { Button } from '../components/Button/Button.tsx';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/solid/writing-stories/introduction
 const meta = {
