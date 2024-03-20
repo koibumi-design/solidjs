@@ -1,7 +1,6 @@
 {
   "name": "@koibumi-design/solidjs",
   "version": "0.0.1",
-  "private": false,
   "keywords": [
     "koibumi-design",
     "solidjs"
@@ -37,5 +36,8 @@
     "typescript": "^5.2.2",
     "vite": "^5.1.6",
     "vite-plugin-solid": "^2.10.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
