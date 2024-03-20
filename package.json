@@ -15,6 +15,7 @@
   "main": "src/index.ts",
   "types": "src/index.ts",
   "scripts": {
+    "prettier": "prettier --write \"src/**/*.{ts,tsx,css,scss}\"",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

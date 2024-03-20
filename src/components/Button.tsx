@@ -1,4 +1,4 @@
-import {Component, JSX, mergeProps, splitProps} from "solid-js";
+import { Component, JSX, mergeProps, splitProps } from 'solid-js';
 import styles from './button.module.scss';
 
 interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -13,18 +13,17 @@ interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button: Component<ButtonProps> = (props: ButtonProps) => {
-    props = mergeProps({
-        variant: 'solid' as ButtonProps['variant'],
-        color: 'primary' as ButtonProps['color'],
-    }, props)
-    const [
-        style,
-        children,
-        others
-    ] = splitProps(
+    props = mergeProps(
+        {
+            variant: 'solid' as ButtonProps['variant'],
+            color: 'primary' as ButtonProps['color'],
+        },
+        props,
+    );
+    const [style, children, others] = splitProps(
         props,
         ['variant', 'color', 'darkMode', 'disabled'],
-        ['children']
+        ['children'],
     );
     const mainClass = () => styles[`button-${style.variant}-${style.color}`];
 
@@ -40,5 +39,5 @@ export const Button: Component<ButtonProps> = (props: ButtonProps) => {
         >
             {children.children}
         </button>
-    )
-}
+    );
+};
