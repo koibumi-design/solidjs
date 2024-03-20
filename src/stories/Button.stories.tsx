@@ -1,44 +1,69 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
-
-import { Button } from './Button';
+import { Button } from '../components/Button';
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/solid/writing-stories/introduction
 const meta = {
-  title: 'Example/Button',
+  title: 'Components/Interact/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+    variant: {
+      control: {
+        type: 'select',
+        options: ['solid', 'light', 'outline', 'flat', 'ghost', 'glow'],
+      },
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: ['primary'],
+      },
+    },
+  }
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/7.0/solid/writing-stories/args
-export const Primary: Story = {
+export const Solid: Story = {
   args: {
-    primary: true,
-    label: 'Button',
+    children: 'Button',
+    variant: 'solid',
   },
 };
 
-export const Secondary: Story = {
+export const Light: Story = {
   args: {
-    label: 'Button',
+    children: 'Button',
+    variant: 'light',
   },
 };
 
-export const Large: Story = {
+export const Outline: Story = {
   args: {
-    size: 'large',
-    label: 'Button',
+    children: 'Button',
+    variant: 'outline',
   },
 };
 
-export const Small: Story = {
+export const Flat: Story = {
   args: {
-    size: 'small',
-    label: 'Button',
+    children: 'Button',
+    variant: 'flat',
+  },
+};
+
+export const Ghost: Story = {
+  args: {
+    children: 'Button',
+    variant: 'ghost',
+  },
+};
+
+export const Glow: Story = {
+  args: {
+    children: 'Button',
+    variant: 'glow',
   },
 };
