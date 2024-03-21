@@ -5,6 +5,7 @@ import './sass/global.scss';
 // ==============================
 
 export { Button } from './components/Button/Button.tsx';
+export { ButtonGroup } from './components/ButtonGroup/ButtonGroup.tsx';
 export { Card } from './components/Card/Card.tsx';
 export { Input } from './components/Input/Input.tsx';
 export { Link } from './components/Link/Link.tsx';
