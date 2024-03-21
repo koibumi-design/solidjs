@@ -34,6 +34,20 @@ type Story = StoryObj<typeof meta>;
 export const Quartz: Story = {
     args: {
         children: <Body />,
+        variant: 'quartz',
+    },
+};
+
+export const Glass: Story = {
+    args: {
+        children: <Body />,
         variant: 'glass',
+    },
+};
+
+export const LightGlass: Story = {
+    args: {
+        children: <Body />,
+        variant: 'lightGlass',
     },
 };
