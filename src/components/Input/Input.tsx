@@ -52,7 +52,7 @@ export const Input: Component<InputProps> = (props: InputProps) => {
                     [mainClass()]: true,
                     [styles['dark-mode']]: local.darkMode,
                     [styles['fix-margin-top']]:
-                    local.label === '' || local.placeholder === '',
+                        local.label === '' || local.placeholder === '',
                 },
                 local.classList,
             )}
