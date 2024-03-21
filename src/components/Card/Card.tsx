@@ -1,5 +1,6 @@
 import { Component, JSX, mergeProps, splitProps } from 'solid-js';
 import styles from './card.module.scss';
+import '../../sass/global.scss';
 
 interface CardProps extends JSX.BaseHTMLAttributes<HTMLDivElement> {
     darkMode?: boolean;
@@ -11,7 +12,7 @@ interface CardProps extends JSX.BaseHTMLAttributes<HTMLDivElement> {
 export const Card: Component<CardProps> = (props) => {
     props = mergeProps(
         {
-            darkMode: true,
+            darkMode: false,
             variant: 'quartz' as CardProps['variant'],
             shadow: true,
             borderless: false,
