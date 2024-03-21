@@ -31,20 +31,18 @@ export const Card: Component<CardProps> = (props) => {
     ]);
     return (
         <div
-            classList={
-                combineClassList(
-                    local.class,
-                    {
-                        [styles.card]: true,
-                        [styles['dark-mode']]: local.darkMode,
-                        [styles.glass]: local.variant === 'glass',
-                        [styles['light-glass']]: local.variant === 'lightGlass',
-                        [styles['no-shadow']]: !local.shadow,
-                        [styles.borderless]: local.borderless,
-                    },
-                    local.classList,
-                )
-            }
+            classList={combineClassList(
+                local.class,
+                {
+                    [styles.card]: true,
+                    [styles['dark-mode']]: local.darkMode,
+                    [styles.glass]: local.variant === 'glass',
+                    [styles['light-glass']]: local.variant === 'lightGlass',
+                    [styles['no-shadow']]: !local.shadow,
+                    [styles.borderless]: local.borderless,
+                },
+                local.classList,
+            )}
             {...rest}
         >
             {local.children}

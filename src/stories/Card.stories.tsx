@@ -2,14 +2,13 @@ import type { Meta, StoryObj } from 'storybook-solidjs';
 import { Card } from '../components/Card/Card.tsx';
 import { Typo } from '../components/Typography/Typo.tsx';
 
-const Body = () =>
-    (<>
+const Body = () => (
+    <>
         <Typo variant="h3">Card Head</Typo>
         <Typo>Card Body</Typo>
-        <Typo>
-            Koibbumi is the most moe Solid.js UI component library ✨
-        </Typo>
-    </>);
+        <Typo>Koibbumi is the most moe Solid.js UI component library ✨</Typo>
+    </>
+);
 
 const meta = {
     title: 'Components/Data Display/Card',

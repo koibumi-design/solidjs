@@ -8,19 +8,22 @@ interface LinkProps extends JSX.AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 export const Link: Component<LinkProps> = (props: LinkProps) => {
-    const [local, rest] =
-        splitProps(props, ['darkMode', 'children', 'class', 'classList']);
+    const [local, rest] = splitProps(props, [
+        'darkMode',
+        'children',
+        'class',
+        'classList',
+    ]);
     return (
         <a
-            classList={
-                combineClassList(local.class,
-                    {
-                        [styles.link]: true,
-                        [styles['dark-mode']]: local.darkMode,
-                    },
-                    local.classList,
-                )
-            }
+            classList={combineClassList(
+                local.class,
+                {
+                    [styles.link]: true,
+                    [styles['dark-mode']]: local.darkMode,
+                },
+                local.classList,
+            )}
             {...rest}
         >
             {local.children}

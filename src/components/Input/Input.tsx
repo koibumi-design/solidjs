@@ -55,8 +55,7 @@ export const Input: Component<InputProps> = (props: InputProps) => {
                     local.label === '' || local.placeholder === '',
                 },
                 local.classList,
-            )
-            }
+            )}
         >
             {labelTextFallback()}
             <input

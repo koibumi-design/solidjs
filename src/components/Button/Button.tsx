@@ -31,16 +31,15 @@ export const Button: Component<ButtonProps> = (props: ButtonProps) => {
     return (
         <button
             disabled={style.disabled}
-            classList={
-                combineClassList(style.class,
-                    {
-                        [mainClass()]: true,
-                        [styles['button-disabled']]: style.disabled,
-                        [styles['dark-mode']]: style.darkMode,
-                    },
-                    style.classList,
-                )
-            }
+            classList={combineClassList(
+                style.class,
+                {
+                    [mainClass()]: true,
+                    [styles['button-disabled']]: style.disabled,
+                    [styles['dark-mode']]: style.darkMode,
+                },
+                style.classList,
+            )}
             {...others}
         >
             {children.children}

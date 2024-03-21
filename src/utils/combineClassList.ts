@@ -1,6 +1,6 @@
 type CombineClassList = {
-    [key: string]: boolean | undefined
-}
+    [key: string]: boolean | undefined;
+};
 
 export function combineClassList(
     baseClass: string | undefined,

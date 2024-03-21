@@ -7,9 +7,18 @@ interface ButtonGroupProps {
     class: string;
 }
 
-export const ButtonGroup: Component<ButtonGroupProps> = (props: ButtonGroupProps) => {
-    props = mergeProps({ direction: 'row' as ButtonGroupProps['direction'] }, props);
-    const [local, others] = splitProps(props, ['direction', 'children', 'class']);
+export const ButtonGroup: Component<ButtonGroupProps> = (
+    props: ButtonGroupProps,
+) => {
+    props = mergeProps(
+        { direction: 'row' as ButtonGroupProps['direction'] },
+        props,
+    );
+    const [local, others] = splitProps(props, [
+        'direction',
+        'children',
+        'class',
+    ]);
 
     return (
         <div

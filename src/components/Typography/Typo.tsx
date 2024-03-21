@@ -20,7 +20,8 @@ export const Typo: Component<TypoProps> = (props: TypoProps) => {
         'classList',
     ]);
     const classListAccessor = () => {
-        return combineClassList(local.class,
+        return combineClassList(
+            local.class,
             {
                 [styles[local.variant!]]: true,
                 [styles.emphasis]: local.emphasis,
