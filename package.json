@@ -1,11 +1,11 @@
 {
   "name": "@koibumi-design/solidjs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "keywords": [
     "koibumi-design",
     "solidjs"
   ],
-  "description": "The most moe Solid.js UI component library.",
+  "description": "The most moe Solid.js UI component library. ✨",
   "author": "Nikaidou Haruki <meteo.haru@gmail.com>",
   "type": "module",
   "license": "MIT",

@@ -1,0 +1,16 @@
+.search-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > label {
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+
+  & > button {
+    height: 3.125rem;
+    border-bottom-left-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+  }
+}
