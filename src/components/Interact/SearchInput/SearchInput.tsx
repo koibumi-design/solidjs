@@ -25,7 +25,7 @@ export const SearchInput: Component<SearchInputProps> = (props) => {
         props.onSearch?.(input());
     }
     return (
-        <div class={styles['search-input']}>
+        <search class={styles['search-input']}>
             <Input
                 disabled={props.disabled}
                 placeholder={props.placeholder}
@@ -47,6 +47,6 @@ export const SearchInput: Component<SearchInputProps> = (props) => {
             >
                 {props.customSearchButton}
             </Button>
-        </div>
+        </search>
     );
 };
