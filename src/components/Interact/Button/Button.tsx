@@ -10,7 +10,7 @@ interface BaseButtonProps {
 }
 
 type RealButtonProps = BaseButtonProps & {
-    as: 'button' | undefined;
+    as?: 'button' | undefined;
 } & JSX.ButtonHTMLAttributes<HTMLButtonElement>;
 
 type LinkButtonProps = BaseButtonProps & {
