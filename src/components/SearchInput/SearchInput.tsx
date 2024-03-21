@@ -19,7 +19,7 @@ export const SearchInput: Component<SearchInputProps> = (props) => {
         buttonVariant: 'solid' as SearchInputProps['buttonVariant'],
         buttonColor: 'primary' as SearchInputProps['buttonColor'],
         customSearchButton: 'Search',
-    })
+    });
     const [input, setInput] = createSignal('');
     function onSearchHandler() {
         props.onSearch?.(input());
@@ -48,5 +48,5 @@ export const SearchInput: Component<SearchInputProps> = (props) => {
                 {props.customSearchButton}
             </Button>
         </div>
-    )
-}
+    );
+};
