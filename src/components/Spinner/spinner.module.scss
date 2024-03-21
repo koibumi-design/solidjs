@@ -1,0 +1,41 @@
+@import '../../sass/colors.scss';
+
+.spinner {
+    transform-origin: center;
+    animation: rotatePentagon 6s ease-out forwards;
+    animation-iteration-count: infinite;
+    @keyframes rotatePentagon {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(1440deg);
+        }
+    }
+
+    &.sm {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    &.md {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    &.lg {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    &.color-primary {
+        color: $color-primary-500;
+    }
+
+    &.color-normal {
+        color: $color-slate-900;
+        &.dark-mode {
+            color: $color-slate-100;
+        }
+    }
+}
