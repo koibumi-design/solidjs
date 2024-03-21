@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
-import { Typo } from '../components/Typography/Typo';
+import { Typo } from '../components/DataDisplay/Typography/Typo';
 
 const meta = {
     title: 'Components/Data Display/Typography',

@@ -1,5 +1,5 @@
 import { Component, createSignal, JSXElement, mergeProps } from 'solid-js';
-import { Input } from '../Input/Input.tsx';
+import { Input } from '../../Form/Input/Input.tsx';
 import { Button } from '../Button/Button.tsx';
 import styles from './searchInput.module.scss';
 

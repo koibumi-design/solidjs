@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
-import { Button } from '../components/Button/Button';
-import { ButtonGroup } from '../components/ButtonGroup/ButtonGroup.tsx';
+import { Button } from '../components/Interact/Button/Button';
+import { ButtonGroup } from '../components/Interact/ButtonGroup/ButtonGroup.tsx';
 
 const meta = {
     title: 'Components/Interact/Button Group',

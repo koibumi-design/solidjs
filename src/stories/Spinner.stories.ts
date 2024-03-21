@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
-import { Spinner } from '../components/Spinner/Spinner';
+import { Spinner } from '../components/Feedback/Spinner/Spinner';
 
 const meta = {
     title: 'Components/Feedback/Spinner',

@@ -4,11 +4,11 @@ import './sass/global.scss';
 // Components
 // ==============================
 
-export { Button } from './components/Button/Button.tsx';
-export { ButtonGroup } from './components/ButtonGroup/ButtonGroup.tsx';
-export { Card } from './components/Card/Card.tsx';
-export { Input } from './components/Input/Input.tsx';
-export { Link } from './components/Link/Link.tsx';
-export { SearchInput } from './components/SearchInput/SearchInput.tsx';
-export { Spinner } from './components/Spinner/Spinner.tsx';
-export { Typo } from './components/Typography/Typo.tsx';
+export { Button } from './components/Interact/Button/Button.tsx';
+export { ButtonGroup } from './components/Interact/ButtonGroup/ButtonGroup.tsx';
+export { Card } from './components/DataDisplay/Card/Card.tsx';
+export { Input } from './components/Form/Input/Input.tsx';
+export { Link } from './components/Interact/Link/Link.tsx';
+export { SearchInput } from './components/Interact/SearchInput/SearchInput.tsx';
+export { Spinner } from './components/Feedback/Spinner/Spinner.tsx';
+export { Typo } from './components/DataDisplay/Typography/Typo.tsx';

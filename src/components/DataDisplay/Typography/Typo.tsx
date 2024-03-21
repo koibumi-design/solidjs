@@ -1,7 +1,7 @@
 import styles from './typo.module.scss';
-import '../../sass/global.scss';
+import '../../../sass/global.scss';
 import { Component, JSX, Match, mergeProps, splitProps, Switch } from 'solid-js';
-import { combineClassList } from '../../utils/combineClassList.ts';
+import { combineClassList } from '../../../utils/combineClassList.ts';
 
 interface TypoProps extends JSX.HTMLAttributes<HTMLParagraphElement> {
     variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';

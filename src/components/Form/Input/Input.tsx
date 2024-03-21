@@ -1,6 +1,6 @@
 import { Component, JSX, mergeProps, splitProps } from 'solid-js';
 import styles from './input.module.scss';
-import { combineClassList } from '../../utils/combineClassList.ts';
+import { combineClassList } from '../../../utils/combineClassList.ts';
 
 interface InputProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
     label?: string;

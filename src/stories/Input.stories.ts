@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
-import { Input } from '../components/Input/Input.tsx';
+import { Input } from '../components/Form/Input/Input.tsx';
 
 const meta = {
     title: 'Components/Form/Input',

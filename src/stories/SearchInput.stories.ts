@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
-import { SearchInput } from '../components/SearchInput/SearchInput';
+import { SearchInput } from '../components/Interact/SearchInput/SearchInput';
 
 const meta = {
     title: 'Components/Interact/SearchInput',

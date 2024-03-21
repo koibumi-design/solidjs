@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
-import { Link } from '../components/Link/Link.tsx';
+import { Link } from '../components/Interact/Link/Link.tsx';
 
 const meta = {
     title: 'Components/Data Display/Link',

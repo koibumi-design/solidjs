@@ -1,7 +1,7 @@
 import styles from './link.module.scss';
-import '../../sass/global.scss';
+import '../../../sass/global.scss';
 import { Component, JSX, splitProps } from 'solid-js';
-import { combineClassList } from '../../utils/combineClassList.ts';
+import { combineClassList } from '../../../utils/combineClassList.ts';
 
 interface LinkProps extends JSX.AnchorHTMLAttributes<HTMLAnchorElement> {
     darkMode?: boolean;

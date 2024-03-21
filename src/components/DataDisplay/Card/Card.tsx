@@ -1,7 +1,7 @@
 import { Component, JSX, mergeProps, splitProps } from 'solid-js';
 import styles from './card.module.scss';
-import '../../sass/global.scss';
-import { combineClassList } from '../../utils/combineClassList.ts';
+import '../../../sass/global.scss';
+import { combineClassList } from '../../../utils/combineClassList.ts';
 
 interface CardProps extends JSX.BaseHTMLAttributes<HTMLDivElement> {
     darkMode?: boolean;

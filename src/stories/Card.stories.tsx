@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from 'storybook-solidjs';
-import { Card } from '../components/Card/Card.tsx';
-import { Typo } from '../components/Typography/Typo.tsx';
+import { Card } from '../components/DataDisplay/Card/Card.tsx';
+import { Typo } from '../components/DataDisplay/Typography/Typo.tsx';
 
 const Body = () => (
     <>

@@ -1,6 +1,6 @@
 import { Component, JSX, Match, mergeProps, splitProps, Switch } from 'solid-js';
 import styles from './button.module.scss';
-import { combineClassList } from '../../utils/combineClassList.ts';
+import { combineClassList } from '../../../utils/combineClassList.ts';
 
 interface BaseButtonProps {
     variant?: 'solid' | 'light' | 'outline' | 'flat' | 'ghost' | 'glow';
