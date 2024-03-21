@@ -1,5 +1,6 @@
 import { Component, JSX, mergeProps, splitProps } from 'solid-js';
 import styles from './input.module.scss';
+import { combineClassList } from '../../utils/combineClassList.ts';
 
 interface InputProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
     label?: string;
@@ -24,6 +25,8 @@ export const Input: Component<InputProps> = (props: InputProps) => {
         'disabled',
         'label',
         'placeholder',
+        'class',
+        'classList',
     ]);
     const mainClass = () => styles[`input-${local.variant}-${local.color}`];
     const labelTextFallback = () => {
@@ -43,12 +46,17 @@ export const Input: Component<InputProps> = (props: InputProps) => {
 
     return (
         <label
-            classList={{
-                [mainClass()]: true,
-                [styles['dark-mode']]: local.darkMode,
-                [styles['fix-margin-top']]:
+            classList={combineClassList(
+                local.class,
+                {
+                    [mainClass()]: true,
+                    [styles['dark-mode']]: local.darkMode,
+                    [styles['fix-margin-top']]:
                     local.label === '' || local.placeholder === '',
-            }}
+                },
+                local.classList,
+            )
+            }
         >
             {labelTextFallback()}
             <input

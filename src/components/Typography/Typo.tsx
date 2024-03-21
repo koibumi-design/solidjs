@@ -1,13 +1,7 @@
 import styles from './typo.module.scss';
 import '../../sass/global.scss';
-import {
-    Component,
-    JSX,
-    Match,
-    mergeProps,
-    splitProps,
-    Switch,
-} from 'solid-js';
+import { Component, JSX, Match, mergeProps, splitProps, Switch } from 'solid-js';
+import { combineClassList } from '../../utils/combineClassList.ts';
 
 interface TypoProps extends JSX.HTMLAttributes<HTMLParagraphElement> {
     variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
@@ -22,13 +16,18 @@ export const Typo: Component<TypoProps> = (props: TypoProps) => {
         'emphasis',
         'darkMode',
         'children',
+        'class',
+        'classList',
     ]);
     const classListAccessor = () => {
-        return {
-            [styles[local.variant!]]: true,
-            [styles.emphasis]: local.emphasis,
-            [styles['dark-mode']]: local.darkMode,
-        };
+        return combineClassList(local.class,
+            {
+                [styles[local.variant!]]: true,
+                [styles.emphasis]: local.emphasis,
+                [styles['dark-mode']]: local.darkMode,
+            },
+            local.classList,
+        );
     };
     return (
         <Switch>

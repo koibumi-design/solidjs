@@ -1,5 +1,6 @@
 import { Component, JSX, mergeProps, splitProps } from 'solid-js';
 import styles from './button.module.scss';
+import { combineClassList } from '../../utils/combineClassList.ts';
 
 interface ButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
     /**
@@ -22,7 +23,7 @@ export const Button: Component<ButtonProps> = (props: ButtonProps) => {
     );
     const [style, children, others] = splitProps(
         props,
-        ['variant', 'color', 'darkMode', 'disabled'],
+        ['variant', 'color', 'darkMode', 'disabled', 'class', 'classList'],
         ['children'],
     );
     const mainClass = () => styles[`button-${style.variant}-${style.color}`];
@@ -30,11 +31,16 @@ export const Button: Component<ButtonProps> = (props: ButtonProps) => {
     return (
         <button
             disabled={style.disabled}
-            classList={{
-                [mainClass()]: true,
-                [styles['button-disabled']]: style.disabled,
-                [styles['dark-mode']]: style.darkMode,
-            }}
+            classList={
+                combineClassList(style.class,
+                    {
+                        [mainClass()]: true,
+                        [styles['button-disabled']]: style.disabled,
+                        [styles['dark-mode']]: style.darkMode,
+                    },
+                    style.classList,
+                )
+            }
             {...others}
         >
             {children.children}
