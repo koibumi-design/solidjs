@@ -2,7 +2,7 @@ import { Component, For, JSX, mergeProps } from 'solid-js';
 import styles from './menu.module.scss';
 import '../../../sass/global.scss';
 
-interface MenuProps {
+export interface MenuProps {
     items: MenuItem[];
     variant?: 'quartz' | 'glass' | 'lightGlass';
     darkMode?: boolean;

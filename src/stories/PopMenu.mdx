@@ -1,0 +1,36 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Components/Interact/PopMenu" />
+
+# PopMenu
+
+Its usage is like `<Menu />` but it is a pop-up menu.
+
+Example:
+
+```tsx
+import { Button, PopMenu, createPopController } from '@koibumi-design/solidjs';
+
+export function Page() {
+    const { isOpen, onOpen, position, onClose } = createPopController();
+    return (
+        <div>
+            <Button
+                onClick={(e: MouseEvent) => {onOpen(e.clientX, e.clientY)}}
+            >
+                Click me
+            </Button>
+            <PopMenu
+                isOpen={isOpen}
+                position={position}
+                onClose={onClose}
+                items={[
+                    {content: 'Item 1'},
+                    {content: 'Item 2'},
+                    {content: 'Item 3'}
+                ]}
+            />
+        </div>
+    );
+}
+```
