@@ -70,3 +70,17 @@ export const Glow: Story = {
         variant: 'glow',
     },
 };
+
+export const Small: Story = {
+    args: {
+        children: 'Button',
+        size: 'small',
+    },
+};
+
+export const Large: Story = {
+    args: {
+        children: 'Button',
+        size: 'large',
+    },
+};

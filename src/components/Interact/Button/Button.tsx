@@ -4,6 +4,7 @@ import { combineClassList } from '../../../utils/combineClassList.ts';
 
 interface BaseButtonProps {
     variant?: 'solid' | 'light' | 'outline' | 'flat' | 'ghost' | 'glow';
+    size?: 'small' | 'medium' | 'large';
     color?: 'primary';
     darkMode?: boolean;
     disabled?: boolean;
@@ -23,12 +24,13 @@ const RealButton: Component<RealButtonProps> = (props: RealButtonProps) => {
         {
             variant: 'solid' as ButtonProps['variant'],
             color: 'primary' as ButtonProps['color'],
+            size: 'medium' as ButtonProps['size'],
         },
         props,
     );
     const [style, children, others] = splitProps(
         props,
-        ['variant', 'color', 'darkMode', 'disabled', 'class', 'classList'],
+        ['variant', 'color', 'darkMode', 'disabled', 'class', 'classList', 'size'],
         ['children'],
     );
     const mainClass = () => styles[`button-${style.variant}-${style.color}`];
@@ -42,6 +44,9 @@ const RealButton: Component<RealButtonProps> = (props: RealButtonProps) => {
                     [mainClass()]: true,
                     [styles['button-disabled']]: style.disabled,
                     [styles['dark-mode']]: style.darkMode,
+                    [styles.md]: style.size === 'medium',
+                    [styles.sm]: style.size === 'small',
+                    [styles.lg]: style.size === 'large',
                 },
                 style.classList,
             )}
