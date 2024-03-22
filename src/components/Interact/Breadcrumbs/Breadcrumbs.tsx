@@ -1,4 +1,4 @@
-import { Component, For, JSX, Show } from 'solid-js';
+import { Component, For, JSX, Match, Show, Switch } from 'solid-js';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup.tsx';
 import { Button } from '../Button/Button.tsx';
 import styles from './bread.module.scss';
@@ -11,6 +11,8 @@ interface BreadcrumbsProps {
 export interface BreadcrumbItem {
     display: string | JSX.Element;
     link?: string;
+    isButton?: boolean;
+    onClick?: () => void;
 }
 
 export const Breadcrumbs: Component<BreadcrumbsProps> = (props) => {
@@ -23,15 +25,29 @@ export const Breadcrumbs: Component<BreadcrumbsProps> = (props) => {
                 {(item, index) => {
                     return (
                         <>
-                            <Button
-                                as="link"
-                                href={item.link}
-                                size="tiny"
-                                variant="light"
-                                class={styles.bread}
-                            >
-                                {item.display}
-                            </Button>
+                            <Switch>
+                                <Match when={item.isButton}>
+                                    <Button
+                                        size="tiny"
+                                        variant="light"
+                                        class={styles.bread}
+                                        onClick={item.onClick}
+                                    >
+                                        {item.display}
+                                    </Button>
+                                </Match>
+                                <Match when={!item.isButton}>
+                                    <Button
+                                        as="link"
+                                        href={item.link}
+                                        size="tiny"
+                                        variant="light"
+                                        class={styles.bread}
+                                    >
+                                        {item.display}
+                                    </Button>
+                                </Match>
+                            </Switch>
                             <Show when={index() < len() - 1}>
                                 <span>
                                     {'>'}
