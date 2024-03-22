@@ -3,15 +3,18 @@ import styles from './buttonGroup.module.scss';
 
 interface ButtonGroupProps {
     direction?: 'row' | 'column';
-    children: JSX.Element[];
-    class: string;
+    children: JSX.Element[] | JSX.Element;
+    class?: string;
 }
 
 export const ButtonGroup: Component<ButtonGroupProps> = (
     props: ButtonGroupProps,
 ) => {
     props = mergeProps(
-        { direction: 'row' as ButtonGroupProps['direction'] },
+        {
+            direction: 'row' as ButtonGroupProps['direction'],
+            class: '',
+        },
         props,
     );
     const [local, others] = splitProps(props, [
@@ -24,7 +27,7 @@ export const ButtonGroup: Component<ButtonGroupProps> = (
         <div
             classList={{
                 [styles[local.direction!]]: true,
-                [local.class]: true,
+                [local.class!]: true,
                 [styles['button-group']]: true,
             }}
             {...others}

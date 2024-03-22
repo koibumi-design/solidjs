@@ -67,7 +67,7 @@ const LinkButton: Component<LinkButtonProps> = (props: LinkButtonProps) => {
     );
     const [style, children, others] = splitProps(
         props,
-        ['variant', 'color', 'darkMode', 'disabled', 'class', 'classList'],
+        ['variant', 'color', 'darkMode', 'disabled', 'class', 'classList', 'size'],
         ['children'],
     );
     const mainClass = () => styles[`button-${style.variant}-${style.color}`];
@@ -80,6 +80,9 @@ const LinkButton: Component<LinkButtonProps> = (props: LinkButtonProps) => {
                     [mainClass()]: true,
                     [styles['button-disabled']]: style.disabled,
                     [styles['dark-mode']]: style.darkMode,
+                    [styles.md]: style.size === 'medium',
+                    [styles.sm]: style.size === 'small',
+                    [styles.lg]: style.size === 'large',
                 },
                 style.classList,
             )}

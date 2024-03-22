@@ -16,7 +16,7 @@ export function Page() {
     return (
         <div>
             <Button
-                onClick={(e: MouseEvent) => {onOpen(e.clientX, e.clientY)}}
+                onClick={(e: MouseEvent) => {onOpen(e.clientX, e.clientY);}}
             >
                 Click me
             </Button>
@@ -27,7 +27,7 @@ export function Page() {
                 items={[
                     {content: 'Item 1'},
                     {content: 'Item 2'},
-                    {content: 'Item 3'}
+                    {content: 'Item 3'},
                 ]}
             />
         </div>
