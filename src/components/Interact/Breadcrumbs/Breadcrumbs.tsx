@@ -18,8 +18,9 @@ export interface BreadcrumbItem {
 export const Breadcrumbs: Component<BreadcrumbsProps> = (props) => {
     let len = () => {
         return props.path.length;
-    }
+    };
     return (
+
         <ButtonGroup class={styles.breadcrumb}>
             <For each={props.path}>
                 {(item, index) => {
@@ -54,9 +55,10 @@ export const Breadcrumbs: Component<BreadcrumbsProps> = (props) => {
                                 </span>
                             </Show>
                         </>
-                    )
+                    );
                 }}
             </For>
         </ButtonGroup>
-    )
-}
+
+    );
+};

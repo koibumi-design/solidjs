@@ -2,7 +2,7 @@
 
 .spinner {
     transform-origin: center;
-    animation: rotatePentagon 6s ease-out forwards;
+    animation: rotatePentagon 4s ease-out forwards;
     animation-iteration-count: infinite;
     @keyframes rotatePentagon {
         from {

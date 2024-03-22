@@ -17,7 +17,14 @@ export { SearchInput } from './components/Interact/SearchInput/SearchInput.tsx';
 export { Spinner } from './components/Feedback/Spinner/Spinner.tsx';
 export { Typo } from './components/DataDisplay/Typography/Typo.tsx';
 
+
 // ==============================
 // Tool Functions
 // ==============================
+
 export { createPopController } from './components/Interact/PopMenu/PopMenu.tsx';
+
+
+// ==============================
+// Heavy Components
+// ==============================
