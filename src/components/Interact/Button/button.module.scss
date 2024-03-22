@@ -40,7 +40,7 @@
         background-color: $color-primary-100;
     }
 
-    body.dark-mode & {
+    &.dark-mode {
         &:hover {
             border-color: $color-primary-700;
             background-color: $color-primary-700;
