@@ -1,0 +1,16 @@
+@import '../../../sass/colors';
+
+.divider {
+    border: none;
+    flex-shrink: 0;
+    &.horizontal {
+        border-top: 1px solid $color-slate-500;
+        width: 100%;
+        display: block;
+    }
+    &.vertical {
+        border-left: 1px solid $color-slate-500;
+        height: 100%;
+        display: inline-block;
+    }
+}
