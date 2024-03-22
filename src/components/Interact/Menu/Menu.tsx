@@ -43,6 +43,7 @@ export const Menu: Component<MenuProps> = (props) => {
                                 [styles['normal-color']]: item.color === 'normal',
                                 [styles['dark-mode']]: props.darkMode,
                             }}
+                            onClick={item.onClick}
                         >
                             {item.content}
                         </li>
