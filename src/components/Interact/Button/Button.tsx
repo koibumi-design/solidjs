@@ -4,7 +4,7 @@ import { combineClassList } from '../../../utils/combineClassList.ts';
 
 interface BaseButtonProps {
     variant?: 'solid' | 'light' | 'outline' | 'flat' | 'ghost' | 'glow';
-    size?: 'small' | 'medium' | 'large';
+    size?: 'tiny' |'small' | 'medium' | 'large';
     color?: 'primary';
     darkMode?: boolean;
     disabled?: boolean;
@@ -47,6 +47,7 @@ const RealButton: Component<RealButtonProps> = (props: RealButtonProps) => {
                     [styles.md]: style.size === 'medium',
                     [styles.sm]: style.size === 'small',
                     [styles.lg]: style.size === 'large',
+                    [styles.tiny]: style.size === 'tiny',
                 },
                 style.classList,
             )}
@@ -83,6 +84,7 @@ const LinkButton: Component<LinkButtonProps> = (props: LinkButtonProps) => {
                     [styles.md]: style.size === 'medium',
                     [styles.sm]: style.size === 'small',
                     [styles.lg]: style.size === 'large',
+                    [styles.tiny]: style.size === 'tiny',
                 },
                 style.classList,
             )}

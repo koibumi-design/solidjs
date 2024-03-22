@@ -18,7 +18,7 @@ export const Breadcrumbs: Component<BreadcrumbsProps> = (props) => {
         return props.path.length;
     }
     return (
-        <ButtonGroup >
+        <ButtonGroup class={styles.breadcrumb}>
             <For each={props.path}>
                 {(item, index) => {
                     return (
@@ -26,7 +26,7 @@ export const Breadcrumbs: Component<BreadcrumbsProps> = (props) => {
                             <Button
                                 as="link"
                                 href={item.link}
-                                size="small"
+                                size="tiny"
                                 variant="light"
                                 class={styles.bread}
                             >

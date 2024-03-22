@@ -1,7 +1,10 @@
 a.bread {
-    padding: 0.125rem 0.25rem !important;
     span {
         height: 100%;
         display: block;
     }
+}
+
+.breadcrumb {
+    gap: 2px !important;
 }

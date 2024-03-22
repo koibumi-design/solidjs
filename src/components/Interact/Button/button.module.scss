@@ -16,6 +16,11 @@
         font-size: 1.375rem;
         border-radius: 0.875rem;
     }
+    &.tiny {
+        font-size: 0.875rem;
+        border-radius: 0.625rem;
+        padding: 0.125rem 0.25rem;
+    }
     border: 2px solid;
     transition:
         background-color 0.3s ease,
