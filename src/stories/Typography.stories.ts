@@ -70,3 +70,11 @@ export const P: Story = {
         children: 'This is a paragraph',
     },
 };
+
+export const Emphasis: Story = {
+    args: {
+        children: 'This is emphasized text',
+        variant: 'h1',
+        emphasis: true,
+    },
+};

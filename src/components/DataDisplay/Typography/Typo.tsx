@@ -24,7 +24,7 @@ export const Typo: Component<TypoProps> = (props: TypoProps) => {
             local.class,
             {
                 [styles[local.variant!]]: true,
-                [styles.emphasis]: local.emphasis,
+                [styles.emphasize]: local.emphasis,
                 [styles['dark-mode']]: local.darkMode,
             },
             local.classList,
