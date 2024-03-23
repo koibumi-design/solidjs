@@ -63,6 +63,7 @@ const LinkButton: Component<LinkButtonProps> = (props: LinkButtonProps) => {
         {
             variant: 'solid' as ButtonProps['variant'],
             color: 'primary' as ButtonProps['color'],
+            size: 'medium' as ButtonProps['size'],
         },
         props,
     );

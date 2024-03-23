@@ -84,3 +84,11 @@ export const Large: Story = {
         size: 'large',
     },
 };
+
+export const AsLink: Story = {
+    args: {
+        children: 'Button',
+        as: 'link',
+        href: 'https://solid.koibumi.art',
+    },
+};
