@@ -1,0 +1,15 @@
+@import '../../../sass/colors';
+
+.fileList {
+    display: flex;
+    gap: 0;
+    flex-direction: column;
+
+    & > * {
+        border-bottom: $color-slate-400 1px solid;
+    }
+
+    & > *:last-child {
+        border-bottom: none;
+    }
+}

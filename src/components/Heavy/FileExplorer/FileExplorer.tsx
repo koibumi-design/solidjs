@@ -1,8 +1,12 @@
-import { createEffect, createSignal, mergeProps } from 'solid-js';
+import { Component, createSignal, For, mergeProps, Show } from 'solid-js';
 import { BreadcrumbItem, Breadcrumbs } from '../../Interact/Breadcrumbs/Breadcrumbs.tsx';
 import { defaultSearchFunction } from './utils.ts';
 import { SearchInput } from '../../Interact/SearchInput/SearchInput.tsx';
 import { Card } from '../../DataDisplay/Card/Card.tsx';
+import { Pagination } from '../../Interact/Pagination/Pagination.tsx';
+import { Item } from './Item.tsx';
+import styles from './file-explorer.module.scss';
+import { createPopController, PopMenu } from '../../Interact/PopMenu/PopMenu.tsx';
 
 export interface FileAction {
     name: string;
@@ -12,9 +16,10 @@ export interface FileAction {
 export interface I18N {
     searchPlaceholder: string;
     searchButton: string;
+    back: string;
 }
 
-export interface FileMeta<T = undefined> {
+export interface FileMeta {
     filename: string;
 
     /**
@@ -22,24 +27,23 @@ export interface FileMeta<T = undefined> {
      */
     size: number;
     lastModified: Date;
-
-    appendix?: T;
 }
 
-export interface DirectoryMeta<T = undefined, U = undefined> extends FileMeta<T> {
-    files: FileMeta<U>[];
-    subdirectories: DirectoryMeta<T, U>[];
+export interface DirectoryMeta extends FileMeta {
+    files: FileMeta[];
+    subdirectories: DirectoryMeta[];
 
     /**
      * If this is true, the directory will call `fetchFiles` when it is opened
+     * not implemented yet
      */
     isLazyLoad?: boolean;
     hasLoaded?: boolean;
-    fetchFiles?: (self: DirectoryMeta<T, U>) => void;
+    fetchFiles?: (self: DirectoryMeta) => [FileMeta[], DirectoryMeta[]];
 }
 
-export interface FileExplorerProps<T = undefined, U = undefined> {
-    root: DirectoryMeta<T, U>;
+export interface FileExplorerProps {
+    root: DirectoryMeta;
     actions?: FileAction[];
 
     /**
@@ -55,118 +59,225 @@ export interface FileExplorerProps<T = undefined, U = undefined> {
      */
     customSearchFunction?: (
         query: string,
-        items: (FileMeta<U> | DirectoryMeta<T, U>)[],
-    ) => (FileMeta<U> | DirectoryMeta<T, U>)[];
+        items: (FileMeta | DirectoryMeta)[],
+    ) => (FileMeta | DirectoryMeta)[];
 
     i18n?: I18N;
-    variant?: 'quartz' | 'glass' | 'lightGlass'
-    darkMode?: boolean;
+    variant?: 'quartz' | 'glass' | 'lightGlass';
 }
 
 const EnglishText: I18N = {
     searchButton: 'Search',
     searchPlaceholder: 'Search Files...',
+    back: 'Back',
 };
 
-export function FileExplorer<T = undefined, U = undefined>(props: FileExplorerProps<T, U>) {
+function judgeType(item: FileMeta | DirectoryMeta) {
+    if ((item as DirectoryMeta).files === undefined) {
+        return 'file';
+    } else {
+        return 'directory';
+    }
+}
+
+export const FileExplorer:Component<FileExplorerProps> = function (props) {
     props = mergeProps({
         filePerPage: 10,
         customSearchFunction: defaultSearchFunction,
         i18n: EnglishText,
         variant: 'quartz' as FileExplorerProps['variant'],
-        darkMode: false,
     }, props);
-
-    const [root, setRoot] = createSignal(props.root);
 
     // When some file is clicked, this signal will be updated
     // `onClick` in `MenuItem` will capture this signal
     const [clickedFilePath, setClickedFilePath] = createSignal<string[]>([]);
 
-    const [currentPath, setCurrentPath] = createSignal<string[]>(['/']);
-    const [dirStack, setDirStack] = createSignal<DirectoryMeta<T, U>[]>([root()]);
-    const [currentDirectory, setCurrentDirectory] = createSignal<DirectoryMeta<T, U>>(root());
+    // The directory stack that you are currently in
+    const [dirStack, setDirStack] = createSignal<DirectoryMeta[]>([props.root]);
 
+    // when back to the previous directory, the previous page number has been stored in this signal
     const [pageNumberMemoryStack, setPageNumberMemoryStack] = createSignal<number[]>([0]);
-    const [currentPageNumber, setCurrentPageNumber] = createSignal<number>(0);
 
-    // to jump to the file path
-    const [breadcrumbProps, setBreadcrumbProps] = createSignal<BreadcrumbItem[]>([]);
-    createEffect(() => {
-        setBreadcrumbProps(
-            currentPath().map((path, index) => {
-                return {
-                    display: path,
-                    isButton: true,
-                    onClick: () => {
-                        setCurrentPath(currentPath().slice(0, index + 1));
-                    },
-                };
-            }),
-        );
-    });
-    createEffect(() => {
-        if (dirStack().length === currentPath().length) {
+    const {
+        isOpen,
+        onOpen,
+        position,
+        onClose,
+    } = createPopController();
+
+    function currentDir() {
+        return dirStack()[dirStack().length - 1];
+    }
+
+    function pushDir(dir: DirectoryMeta) {
+        setPageNumberMemoryStack([...pageNumberMemoryStack(), 0]);
+        setDirStack([...dirStack(), dir]);
+    }
+
+    function popDir() {
+        if (dirStack().length === 1) {
             return;
         }
-        setDirStack(
-            dirStack().slice(0, currentPath().length + 1),
-        );
-    });
-    createEffect(() => {
-        setCurrentDirectory(dirStack()[currentPath().length]);
-    });
+        const newDirStack = dirStack().slice(0, dirStack().length - 1);
+        const newPageNumberMemoryStack = pageNumberMemoryStack().slice(0, pageNumberMemoryStack().length - 1);
+        setDirStack(newDirStack);
+        setPageNumberMemoryStack(newPageNumberMemoryStack);
+    }
 
-    function onSearch(query: string) {
-        const searchDir: DirectoryMeta<T, U> = {
-            filename: 'Search Result',
-            size: 0,
-            lastModified: new Date(),
-            files: [],
-            subdirectories: [],
-        };
-        const currentItems: (FileMeta<U> | DirectoryMeta<T, U>)[] =
-            (currentDirectory().files as (FileMeta<U> | DirectoryMeta<T, U>)[])
-                .concat(currentDirectory().subdirectories);
-        const searchResult =
-            props.customSearchFunction!(
-                query,
-                currentItems,
-            );
-        const files = searchResult.filter(
-            (item) => !(item as DirectoryMeta<T, U>).files,
-        );
-        const subdirectories = searchResult.filter(
-            (item) => (item as DirectoryMeta<T, U>).files,
-        );
-        searchDir.files = files as FileMeta<U>[];
-        searchDir.subdirectories = subdirectories as DirectoryMeta<T, U>[];
-        const pathTop = currentPath()[currentPath().length - 1];
-        if (pathTop !== 'Search Result') {
-            setCurrentPath([...currentPath(), 'Search Result']);
+    function jumpToDir(index: number) {
+        const newDirStack = dirStack().slice(0, index + 1);
+        const newPageNumberMemoryStack = pageNumberMemoryStack().slice(0, index + 1);
+        setDirStack(newDirStack);
+        setPageNumberMemoryStack(newPageNumberMemoryStack);
+    }
+
+    function currentPageNumber() {
+        return pageNumberMemoryStack()[pageNumberMemoryStack().length - 1] + 1;
+    }
+
+    function setCurrentPageNumber(pageNumber: number) {
+        console.log('call setCurrentPageNumber');
+        const dirLength = dirStack().length;
+        const newArray = pageNumberMemoryStack()
+            .map((value, index) => {
+                if (index === dirLength - 1) {
+                    return pageNumber - 1;
+                } else {
+                    return value;
+                }
+            })
+        setPageNumberMemoryStack(newArray);
+    }
+
+    function breadcrumbItems() {
+        const items: BreadcrumbItem[] = [];
+        for (let i = 0; i < dirStack().length; i++) {
+            items.push({
+                display: dirStack()[i].filename,
+                isButton: true,
+                onClick: () => jumpToDir(i),
+            });
+        }
+        return items;
+    }
+
+    function currentItems() {
+        const dir = currentDir();
+        const files = dir.files;
+        const subdirectories = dir.subdirectories;
+        return (subdirectories as (FileMeta | DirectoryMeta)[])
+            .concat(files);
+    }
+
+    function maxPage() {
+        return Math.ceil(currentItems().length / props.filePerPage!);
+    }
+
+    function getMenuItems() {
+        const actions = props.actions!;
+        return actions.map(action => ({
+            content: action.name,
+            onClick: () => action.action(clickedFilePath()),
+        }));
+    }
+
+    function currentItemsOnPage() {
+        const items = currentItems();
+        const start = (currentPageNumber() - 1) * props.filePerPage!;
+        return items.slice(start, start + props.filePerPage!);
+    }
+
+    function handleMouseDown(item: FileMeta | DirectoryMeta):
+        (event: MouseEvent) => void
+        {
+        const type = judgeType(item);
+        if (type === 'file') {
+            const thisItem = item as FileMeta;
+            if (props.actions === undefined) {
+                return () => {}
+            }
+            return (event: MouseEvent) => {
+                if (event.button === 0 || event.button === 2) {
+                    setClickedFilePath(
+                        [
+                            ...(
+                                dirStack()
+                                    .map(dir => dir.filename)
+                            ),
+                            thisItem.filename
+                        ]
+                    );
+                    onOpen(event.clientX, event.clientY);
+                }
+            }
         } else {
-            setCurrentPath(currentPath());
+            const thisItem = item as DirectoryMeta;
+            return (event: MouseEvent) => {
+                if (event.button === 0) {
+                    pushDir(thisItem);
+                }
+            }
+        }
+    }
+
+    const handleBack = () => (e: MouseEvent) => {
+        if (e.button === 0) {
+            popDir();
         }
     }
 
     return (
-        <Card darkMode={props.darkMode} variant={props.variant}>
+        <Card variant={props.variant}>
             <SearchInput
-                onSearch={onSearch}
                 placeholder={props.i18n!.searchPlaceholder}
                 customSearchButton={props.i18n!.searchButton}
-                darkMode={props.darkMode}
             />
             <Card
                 shadow={false}
                 variant={props.variant}
                 style={{
-                    padding: '0.5rem 0.75rem'
+                    padding: '0.5rem 0.75rem',
                 }}
             >
-                <Breadcrumbs path={breadcrumbProps()} />
+                <Breadcrumbs path={breadcrumbItems()} />
             </Card>
-
+            <Card
+                shadow={false}
+                variant={props.variant}
+            >
+                <ul class={styles.fileList}>
+                    <Show when={dirStack().length > 1}>
+                        <Item
+                            type="back" meta=".." backText={props.i18n?.back}
+                            onMouseDown={handleBack()}
+                        />
+                    </Show>
+                    <For each={currentItemsOnPage()}>
+                        {item => (
+                            <Item
+                                type={judgeType(item)}
+                                meta={item}
+                                onMouseDown={handleMouseDown(item)}
+                            />
+                        )}
+                    </For>
+                </ul>
+            </Card>
+            <Show when={props.actions !== undefined}>
+                <PopMenu
+                    isOpen={isOpen()}
+                    position={position()}
+                    onClose={onClose}
+                    items={getMenuItems()}
+                />
+            </Show>
+            <Show when={maxPage() > 1}>
+                <Pagination
+                    maxPage={maxPage()}
+                    currentPage={currentPageNumber()}
+                    onPageChange={setCurrentPageNumber}
+                />
+            </Show>
         </Card>
     );
 }

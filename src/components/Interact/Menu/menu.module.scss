@@ -1,13 +1,15 @@
 @import '../../../sass/colors';
 
 .menu {
-    padding: 0.25rem;
+    padding: 0.5rem;
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: start;
     gap: 0.125rem;
+    min-width: 10rem;
+    width: 100%;
 
     &.borderless {
         border: none !important;

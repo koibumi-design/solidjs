@@ -42,17 +42,29 @@ export const PopMenu: Component<PopMenuProps> = (props) => {
     const [local, rest] = splitProps(
         props, ['isOpen', 'position', 'onClose', 'items'],
     );
-    const handleClickOutside = (event: MouseEvent) => {
-        if (!ref.contains(event.target as Node)) {
-            local.onClose();
-        }
-    }
+    const [cannotClose, setCannotClose] = createSignal(true);
+
     onMount(() => {
-        document.addEventListener('mousedown', handleClickOutside);
+        const f = (event: MouseEvent) => {
+            const target = event.target as Element;
+            if (!ref) {
+                return;
+            }
+            if (!ref.contains(target) && !cannotClose()) {
+                local.onClose();
+            }
+            setCannotClose(!local.isOpen);
+        }
+        const preventDefault = (event: MouseEvent) => {
+            event.preventDefault();
+        }
+        document.addEventListener('mousedown', f);
+        document.addEventListener('contextmenu', preventDefault);
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('mousedown', f);
+            document.removeEventListener('contextmenu', preventDefault);
         };
-    })
+    });
     const newItems = () => {
         return local.items.map((item) => {
             return {
