@@ -18,7 +18,7 @@ export function formatDate(date: Date): string {
     return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
 }
 
-export function defaultSearchFunction<T, U>
-(query: string, items: (FileMeta<U> | DirectoryMeta<T, U>)[]): (FileMeta<U> | DirectoryMeta<T, U>)[] {
+export function defaultSearchFunction
+(query: string, items: (FileMeta | DirectoryMeta)[]): (FileMeta | DirectoryMeta)[] {
     return items.filter((item) => item.filename.includes(query));
 }

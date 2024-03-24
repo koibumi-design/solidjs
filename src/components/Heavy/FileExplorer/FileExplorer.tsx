@@ -16,6 +16,7 @@ export interface FileAction {
 export interface I18N {
     searchPlaceholder: string;
     searchButton: string;
+    searchResult: string;
     back: string;
 }
 
@@ -35,11 +36,10 @@ export interface DirectoryMeta extends FileMeta {
 
     /**
      * If this is true, the directory will call `fetchFiles` when it is opened
-     * not implemented yet
      */
     isLazyLoad?: boolean;
     hasLoaded?: boolean;
-    fetchFiles?: (self: DirectoryMeta) => [FileMeta[], DirectoryMeta[]];
+    fetchFiles?: (self: DirectoryMeta) => Promise<[FileMeta[], DirectoryMeta[]]>;
 }
 
 export interface FileExplorerProps {
@@ -69,6 +69,7 @@ export interface FileExplorerProps {
 const EnglishText: I18N = {
     searchButton: 'Search',
     searchPlaceholder: 'Search Files...',
+    searchResult: 'Search Result',
     back: 'Back',
 };
 
@@ -78,6 +79,24 @@ function judgeType(item: FileMeta | DirectoryMeta) {
     } else {
         return 'directory';
     }
+}
+
+function createSearchResultVDir(items: (FileMeta | DirectoryMeta)[], name: string): DirectoryMeta {
+    const searchResult: DirectoryMeta = {
+        filename: name,
+        size: 0,
+        lastModified: new Date(),
+        files: [],
+        subdirectories: [],
+    };
+    items.forEach(item => {
+        if (judgeType(item) === 'file') {
+            searchResult.files.push(item as FileMeta);
+        } else {
+            searchResult.subdirectories.push(item as DirectoryMeta);
+        }
+    });
+    return searchResult;
 }
 
 export const FileExplorer:Component<FileExplorerProps> = function (props) {
@@ -187,14 +206,31 @@ export const FileExplorer:Component<FileExplorerProps> = function (props) {
         return items.slice(start, start + props.filePerPage!);
     }
 
+    function nowIsSearchResult() {
+        return dirStack()[dirStack().length - 1].filename === props.i18n!.searchResult;
+    }
+
+    function handleOnSearch(query: string) {
+        if (nowIsSearchResult()) {
+            popDir();
+            const result = props.customSearchFunction!(query, currentItems());
+            const searchResult = createSearchResultVDir(result, props.i18n!.searchResult);
+            pushDir(searchResult);
+        } else {
+            const result = props.customSearchFunction!(query, currentItems());
+            const searchResult = createSearchResultVDir(result, props.i18n!.searchResult);
+            pushDir(searchResult);
+        }
+    }
+
     function handleMouseDown(item: FileMeta | DirectoryMeta):
-        (event: MouseEvent) => void
-        {
+        (event: MouseEvent) => void {
         const type = judgeType(item);
         if (type === 'file') {
             const thisItem = item as FileMeta;
             if (props.actions === undefined) {
-                return () => {}
+                return () => {
+                }
             }
             return (event: MouseEvent) => {
                 if (event.button === 0 || event.button === 2) {
@@ -210,12 +246,21 @@ export const FileExplorer:Component<FileExplorerProps> = function (props) {
                     onOpen(event.clientX, event.clientY);
                 }
             }
-        } else {
+        } else if (type === 'directory') {
             const thisItem = item as DirectoryMeta;
-            return (event: MouseEvent) => {
+            return async (event: MouseEvent) => {
+                if (thisItem.isLazyLoad && !thisItem.hasLoaded) {
+                    const [files, dirs] = await thisItem.fetchFiles!(thisItem);
+                    thisItem.files = files;
+                    thisItem.subdirectories = dirs;
+                    thisItem.hasLoaded = true;
+                }
                 if (event.button === 0) {
                     pushDir(thisItem);
                 }
+            }
+        } else {
+            return () => {
             }
         }
     }
@@ -228,9 +273,18 @@ export const FileExplorer:Component<FileExplorerProps> = function (props) {
 
     return (
         <Card variant={props.variant}>
+            <Show when={props.actions !== undefined}>
+                <PopMenu
+                    isOpen={isOpen()}
+                    position={position()}
+                    onClose={onClose}
+                    items={getMenuItems()}
+                />
+            </Show>
             <SearchInput
                 placeholder={props.i18n!.searchPlaceholder}
                 customSearchButton={props.i18n!.searchButton}
+                onSearch={handleOnSearch}
             />
             <Card
                 shadow={false}
@@ -263,14 +317,6 @@ export const FileExplorer:Component<FileExplorerProps> = function (props) {
                     </For>
                 </ul>
             </Card>
-            <Show when={props.actions !== undefined}>
-                <PopMenu
-                    isOpen={isOpen()}
-                    position={position()}
-                    onClose={onClose}
-                    items={getMenuItems()}
-                />
-            </Show>
             <Show when={maxPage() > 1}>
                 <Pagination
                     maxPage={maxPage()}

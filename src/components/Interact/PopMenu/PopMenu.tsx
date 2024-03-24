@@ -48,6 +48,7 @@ export const PopMenu: Component<PopMenuProps> = (props) => {
         const f = (event: MouseEvent) => {
             const target = event.target as Element;
             if (!ref) {
+                setCannotClose(true);
                 return;
             }
             if (!ref.contains(target) && !cannotClose()) {
