@@ -72,6 +72,7 @@ export const PopMenu: Component<PopMenuProps> = (props) => {
                 ...item,
                 onClick: () => {
                     item.onClick?.();
+                    setCannotClose(true)
                     local.onClose();
                 },
             };
